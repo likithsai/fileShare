@@ -8,7 +8,8 @@
     }
 
     if (isset($_GET['id'])) {
-      $user_data = json_decode($crypto->decrypt($_GET['id'], SEC_KEY), true);
+      $id = urldecode($_GET['id']);
+      $user_data = json_decode($crypto->decrypt($id, SEC_KEY), true);
     }
 
     if(isset($_GET['task'])) {
@@ -19,6 +20,10 @@
             header("Location: index.php");
             break;
       }
+    }
+
+    function getSelectedMenu($task) {
+        return (strtolower($_GET['task']) == $task) ? 'accordion-active' : '';
     }
 
     echo '<body cz-shortcut-listen="true" class="h-100 flex-column d-flex">
@@ -36,7 +41,7 @@
                 </div>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="/dashboard" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . $id . '&task=dashboard" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-speedometer me-3"></i>
@@ -46,17 +51,17 @@
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="/dashboard" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . $id . '&task=files" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-folder me-3"></i>
-                      <span>File Browser</span>
+                      <span>Files</span>
                     </button>
                   </h2>
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="/dashboard" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . $id . '&task=shared" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-share me-3"></i>
@@ -66,21 +71,21 @@
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="/dashboard" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . $id . '&task=categories" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
-                      <i class="bi bi-tag me-3"></i>
+                      <i class="bi bi-journal-bookmark me-3"></i>
                       <span>Categories</span>
                     </button>
                   </h2>
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="/dashboard" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . $id . '&task=users" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed bg-dark  text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-person-circle me-3"></i>
-                      <span>User</span>
+                      <span>Users</span>
                     </button>
                   </h2>
                 </a>
@@ -120,18 +125,7 @@
 
       <main class="container flex-shrink-0">
         <div class="row">
-          <div class="col-md-12">
-            <div class="py-4 d-md-flex justify-content-between align-items-center breadcrum-panel">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-
-          <div class="col-md-12 d-lg-flex">
+          <div class="col-md-12 d-lg-flex my-4 my-lg-5">
             <div class="col-lg-3 d-none d-lg-block">
               <div class="accordion accordion-flush shadow-sm" id="accordionFlushExample">
                 <div class="accordion-item px-3 py-4">
@@ -144,9 +138,9 @@
                   </div>
                 </div>
                 <div class="accordion-item">
-                  <a href="/dashboard" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . $id . '&task=dashboard" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed remove-dropdown accordion-active" type="button" data-bs-toggle="collapse">
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('dashboard') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-speedometer me-3"></i>
                         <span>Dashboard</span>
                       </button>
@@ -154,19 +148,19 @@
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="/dashboard" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . $id . '&task=files" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed remove-dropdown" type="button" data-bs-toggle="collapse">
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('files') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-folder me-3"></i>
-                        <span>File Browser</span>
+                        <span>Files</span>
                       </button>
                     </h2>
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="/dashboard" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . $id . '&task=shared" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed remove-dropdown" type="button" data-bs-toggle="collapse">
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('shared') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-share me-3"></i>
                         <span>Shared</span>
                       </button>
@@ -174,31 +168,51 @@
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="/dashboard" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . $id . '&task=categories" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed remove-dropdown" type="button" data-bs-toggle="collapse">
-                        <i class="bi bi-tag me-3"></i>
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('categories') . '" type="button" data-bs-toggle="collapse">
+                        <i class="bi bi-journal-bookmark me-3"></i>
                         <span>Categories</span>
                       </button>
                     </h2>
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="/dashboard" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . $id . '&task=users" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed remove-dropdown" type="button" data-bs-toggle="collapse">
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('users') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-person-circle me-3"></i>
-                        <span>User</span>
+                        <span>Users</span>
                       </button>
                     </h2>
                   </a>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-9 col-md-12 px-lg-4">
-              <h3>Dashboard</h3>
-            </div>
-          </div>
+            </div>';
+            
+            switch(strtolower($_GET['task'])) {
+                case 'dashboard':
+                  include_once 'includes/views/Dashboard.php';
+                  break;
+
+                case 'files':
+                  include_once 'includes/views/Files.php';
+                  break;
+
+                case 'shared':
+                  include_once 'includes/views/Shared.php';
+                  break;
+
+                case 'categories':
+                  include_once 'includes/views/Categories.php';
+                  break;
+
+                case 'users':
+                  include_once 'includes/views/Users.php';
+                  break;
+            }
+
+          '</div>
         </div>
       </main>
     </body>';

@@ -4,7 +4,7 @@ include_once 'includes/Header.php';
 //  check if session exists
 if($session->has('FS_CONFIG')) {
     $id = $session->get('FS_CONFIG');
-    header("Location: dashboard.php?id=" . urlencode($id));
+    header("Location: dashboard.php?id=" . urlencode($id) . "&task=dashboard");
 }
 
 if (isset($_POST['submit'])) {
@@ -51,6 +51,7 @@ echo '<body class="bg-light">
                 </div>
                 <input type="submit" value="Submit" name="submit" class="btn btn-primary col-12 py-3"></input>
             </form>
+            <p class="text-center my-3">Forgot your password? <a href="register">Set up a new one</a>.</p>
         </section>
     </body>';
 
