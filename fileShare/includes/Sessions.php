@@ -21,7 +21,7 @@
               return ($def !== false)? $def : false;
         }
 
-        function del($name){
+        function remove($name){
             unset($_SESSION[$name]);
             return $this;
         }
@@ -32,15 +32,7 @@
             return $this;
         }
 
-        function fromArray($a=null){
-            if( is_array($a) ){
-              foreach($a as $k => $v) 
-                $this->set($k,$v);
-            }
-            return $this;
-        }
-
-        function __toString(){
-            return '<pre>'.print_r($_SESSION,true).'</pre>';
+        function has($key) {
+            return array_key_exists($key, $_SESSION);
         }
     }
