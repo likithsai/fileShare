@@ -1,38 +1,48 @@
 <?php
     class SessionManager {
-        function __construct(){
-            return $this->start();
+        public function __construct(string $cacheExpire = null) {
+            if (session_status() === PHP_SESSION_NONE) {
+                if ($cacheExpire !== null) {
+                    session_cache_expire($cacheExpire);
+                }
+                session_start();
+            }
         }
-
-        public function start(){
-            session_start();
+    
+        /**
+         * @param string $key
+         * @return mixed
+         */
+        public function get(string $key) {
+            if ($this->has($key)) {
+                return $_SESSION[$key];
+            }
+            return null;
+        }
+    
+        /**
+         * @param string $key
+         * @param mixed $value
+         * @return SessionManager
+         */
+        public function set(string $key, $value) {
+            $_SESSION[$key] = $value;
             return $this;
         }
-
-        function set($name, $value){
-            $_SESSION[$name] = $value;
-            return $this;
+    
+        public function remove(string $key) {
+            if ($this->has($key)) {
+                unset($_SESSION[$key]);
+            }
         }
-
-        function get($name ,$def = false){
-            if(isset($_SESSION[$name]))
-              return $_SESSION[$name];
-            else
-              return ($def !== false)? $def : false;
+    
+        public function clear() {
+            session_unset();
         }
-
-        function remove($name){
-            unset($_SESSION[$name]);
-            return $this;
-        }
-
-        function destroy(){
-            $_SESSION = array();
-            session_destroy();
-            return $this;
-        }
-
-        function has($key) {
+    
+        public function has(string $key) {
             return array_key_exists($key, $_SESSION);
         }
+    
     }
+?>

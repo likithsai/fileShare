@@ -1,14 +1,13 @@
 <?php
     include_once 'includes/Header.php';
-
     //  check if session exists
     //  if not, then redirect to login page
-    if(!$session->has('FS_CONFIG')) {
+    if(!$session->has('fs_config')) {
       header("Location: index.php");
     }
 
     if (isset($_GET['id'])) {
-      $id = urldecode($_GET['id']);
+      $id = $_GET['id'];
       $user_data = json_decode($crypto->decrypt($id, SEC_KEY), true);
     }
 
@@ -16,7 +15,7 @@
       switch(strtolower($_GET['task'])) {
         case 'logout':
             //  Delete the session
-            $session->destroy();
+            $session->remove('fs_config');
             header("Location: index.php");
             break;
       }
@@ -55,17 +54,10 @@
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-folder me-3"></i>
-                      <span>Files</span>
-                    </button>
-                  </h2>
-                </a>
-              </div>
-              <div class="accordion-item bg-dark">
-                <a href="dashboard.php?id=' . $id . '&task=shared" class="accordion-item text-decoration-none">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
-                      <i class="bi bi-share me-3"></i>
-                      <span>Shared</span>
+                      <div class="d-flex align-items-center justify-content-between w-100">
+                          <span>Files</span>
+                          <span class="badge bg-primary">4</span>
+                      </div>
                     </button>
                   </h2>
                 </a>
@@ -75,7 +67,10 @@
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-journal-bookmark me-3"></i>
-                      <span>Categories</span>
+                      <div class="d-flex align-items-center justify-content-between w-100">
+                          <span>Categories</span>
+                          <span class="badge bg-primary">4</span>
+                      </div>
                     </button>
                   </h2>
                 </a>
@@ -152,17 +147,10 @@
                     <h2 class="accordion-header">
                       <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('files') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-folder me-3"></i>
-                        <span>Files</span>
-                      </button>
-                    </h2>
-                  </a>
-                </div>
-                <div class="accordion-item">
-                  <a href="dashboard.php?id=' . $id . '&task=shared" class="accordion-item text-decoration-none">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('shared') . '" type="button" data-bs-toggle="collapse">
-                        <i class="bi bi-share me-3"></i>
-                        <span>Shared</span>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                          <span>Files</span>
+                          <span class="badge bg-primary">4</span>
+                        </div>
                       </button>
                     </h2>
                   </a>
@@ -172,7 +160,10 @@
                     <h2 class="accordion-header">
                       <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('categories') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-journal-bookmark me-3"></i>
-                        <span>Categories</span>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                          <span>Categories</span>
+                          <span class="badge bg-primary">4</span>
+                        </div>
                       </button>
                     </h2>
                   </a>

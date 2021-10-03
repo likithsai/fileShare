@@ -4,7 +4,7 @@
     include 'Crypto.php';
     include 'Sessions.php';
 
-    $session = new SessionManager();
+    $session = new SessionManager(30);
     $crypto = new Crypto();
     $db = new Database();
     $db->openConnection(HOST, USER, PASSWORD, DATABASE);
