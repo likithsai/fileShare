@@ -4,7 +4,7 @@
                 <h3>Users</h3>
                 <button type="button" class="btn btn-primary btn-sm">
                     <i class="bi bi-plus"></i>
-                    <span>Add Users</span>
+                    <span class="text-uppercase">Add Users</span>
                 </button>
             </div>
             <div class="row h-100 align-items-center">

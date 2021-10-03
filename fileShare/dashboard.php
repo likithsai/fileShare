@@ -104,7 +104,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
 
-            <ul class="d-none d-lg-flex nav pull-right nav_account">
+            <ul class="d-none d-lg-flex nav me-3">
               <li class="text-white p-1">
                 <i class="bi bi-person-circle"></i>
                 <span>' . $user_data['user_name'] .', </span>
@@ -119,9 +119,9 @@
 
       <main class="container flex-shrink-0">
         <div class="row">
-          <div class="col-md-12 d-lg-flex my-4 my-lg-5">
+          <div class="col-md-12 d-lg-flex my-4 my-lg-4">
             <div class="col-lg-3 d-none d-lg-block">
-              <div class="accordion accordion-flush shadow-sm" id="accordionFlushExample">
+              <div class="accordion accordion-flush shadow-sm mt-5" id="accordionFlushExample">
                 <div class="accordion-item px-3 py-4">
                   <div>
                     <h5 class="mb-0 text-primary font-weight-bold">45.5 GB <span class="float-end text-secondary">50 GB</span></h5>
