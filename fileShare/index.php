@@ -15,7 +15,10 @@
         if (count($query) == 1) {
             $id = $crypto->encrypt(json_encode(array(
                 'user_id' => $query[0]['user_id'], 
-                'user_name' => $query[0]['user_name']
+                'user_personname' => $query[0]['user_personname'],
+                'user_email' => $query[0]['user_email'],
+                'user_name' => $query[0]['user_name'],
+                'user_role' => $query[0]['user_role']
             )), SEC_KEY);
             $session->set('fs_config', $id);
             header("Location: dashboard.php?id=" . urlencode($id) . "&task=dashboard");

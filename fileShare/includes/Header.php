@@ -3,11 +3,13 @@
     include 'Database.php';
     include 'Crypto.php';
     include 'Sessions.php';
+    include 'Compress.php';
 
     $session = new SessionManager(30);
     $crypto = new Crypto();
     $db = new Database();
     $db->openConnection(HOST, USER, PASSWORD, DATABASE);
+    $compress = new CompressManager();
 ?>
 
 <!DOCTYPE html>

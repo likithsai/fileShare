@@ -25,6 +25,9 @@
         return (strtolower($_GET['task']) == $task) ? 'accordion-active' : '';
     }
 
+
+    $filescount = $db->query("SELECT * FROM tbl_files WHERE file_userid=?", array($user_data['user_id']));
+
     echo '<body cz-shortcut-listen="true" class="h-100 flex-column d-flex">
       <header class="sticky-top shadow-sm">
         <div class="collapse" id="navbarToggleExternalContent">
@@ -40,7 +43,7 @@
                 </div>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="dashboard.php?id=' . $id . '&task=dashboard" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . urlencode($id) . '&task=dashboard" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-speedometer me-3"></i>
@@ -50,20 +53,20 @@
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="dashboard.php?id=' . $id . '&task=files" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . urlencode($id) . '&task=files" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-folder me-3"></i>
                       <div class="d-flex align-items-center justify-content-between w-100">
                           <span>Files</span>
-                          <span class="badge bg-primary">4</span>
+                          <span class="badge bg-primary">' . count($filescount) .'</span>
                       </div>
                     </button>
                   </h2>
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="dashboard.php?id=' . $id . '&task=categories" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . urlencode($id) . '&task=categories" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-journal-bookmark me-3"></i>
@@ -76,7 +79,7 @@
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="dashboard.php?id=' . $id . '&task=users" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . urlencode($id) . '&task=users" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed bg-dark  text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-person-circle me-3"></i>
@@ -100,20 +103,16 @@
             <button class="navbar-toggler d-block d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="d-none d-lg-block">
-              <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . $user_data['user_name'] .'</a>
-                  <ul class="dropdown-menu dropdown-menu-end position-absolute" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i><span>Settings</span></a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="dashboard.php?task=logout"><i class="bi bi-box-arrow-right me-1"></i> <span>Logout</span></a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+
+            <ul class="d-none d-lg-flex nav pull-right nav_account">
+              <li class="text-white p-1">
+                <i class="bi bi-person-circle"></i>
+                <span>' . $user_data['user_name'] .', </span>
+              </li>
+              <li class="text-white p-1">
+                <a class="text-warning" href="dashboard.php?id=' . urlencode($id) . '&task=logout">Logout</a>
+              </li>
+            </ul>
           </div>
         </div>
       </header>
@@ -133,7 +132,7 @@
                   </div>
                 </div>
                 <div class="accordion-item">
-                  <a href="dashboard.php?id=' . $id . '&task=dashboard" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . urlencode($id) . '&task=dashboard" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
                       <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('dashboard') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-speedometer me-3"></i>
@@ -143,20 +142,20 @@
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="dashboard.php?id=' . $id . '&task=files" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . urlencode($id) . '&task=files" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
                       <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('files') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-folder me-3"></i>
                         <div class="d-flex align-items-center justify-content-between w-100">
                           <span>Files</span>
-                          <span class="badge bg-primary">4</span>
+                          <span class="badge bg-primary">' . count($filescount) .'</span>
                         </div>
                       </button>
                     </h2>
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="dashboard.php?id=' . $id . '&task=categories" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . urlencode($id) . '&task=categories" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
                       <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('categories') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-journal-bookmark me-3"></i>
@@ -169,11 +168,26 @@
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="dashboard.php?id=' . $id . '&task=users" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . urlencode($id) . '&task=users" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
                       <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('users') . '" type="button" data-bs-toggle="collapse">
                         <i class="bi bi-person-circle me-3"></i>
-                        <span>Users</span>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                          <span>Users</span>
+                          <span class="badge bg-primary">4</span>
+                        </div>
+                      </button>
+                    </h2>
+                  </a>
+                </div>
+                <div class="accordion-item">
+                  <a href="dashboard.php?id=' . urlencode($id) . '&task=options" class="accordion-item text-decoration-none">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('options') . '" type="button" data-bs-toggle="collapse">
+                        <i class="bi bi-gear me-3"></i>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                          <span>Options</span>
+                        </div>
                       </button>
                     </h2>
                   </a>
@@ -200,6 +214,10 @@
 
                 case 'users':
                   include_once 'includes/views/Users.php';
+                  break;
+
+                case 'options':
+                  include_once 'includes/views/Options.php';
                   break;
             }
 
