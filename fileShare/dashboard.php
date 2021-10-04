@@ -27,6 +27,7 @@
 
 
     $filescount = $db->query("SELECT * FROM tbl_files WHERE file_userid=?", array($user_data['user_id']));
+    $categoriescount = $db->query("SELECT * FROM tbl_categories WHERE category_userid=?", array($user_data['user_id']));
 
     echo '<body cz-shortcut-listen="true" class="h-100 flex-column d-flex">
       <header class="sticky-top shadow-sm">
@@ -72,7 +73,7 @@
                       <i class="bi bi-journal-bookmark me-3"></i>
                       <div class="d-flex align-items-center justify-content-between w-100">
                           <span>Categories</span>
-                          <span class="badge bg-primary">4</span>
+                          <span class="badge bg-primary">' . count($categoriescount) . '</span>
                       </div>
                     </button>
                   </h2>
@@ -161,7 +162,7 @@
                         <i class="bi bi-journal-bookmark me-3"></i>
                         <div class="d-flex align-items-center justify-content-between w-100">
                           <span>Categories</span>
-                          <span class="badge bg-primary">4</span>
+                          <span class="badge bg-primary">' . count($categoriescount) . '</span>
                         </div>
                       </button>
                     </h2>
