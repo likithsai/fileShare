@@ -122,7 +122,7 @@
         <div class="row">
           <div class="col-md-12 d-lg-flex my-4 my-lg-4">
             <div class="col-lg-3 d-none d-lg-block">
-              <div class="accordion accordion-flush shadow-sm mt-5" id="accordionFlushExample">
+              <div class="accordion accordion-flush shadow-sm" id="accordionFlushExample">
                 <div class="accordion-item px-3 py-4">
                   <div>
                     <h5 class="mb-0 text-primary font-weight-bold">45.5 GB <span class="float-end text-secondary">50 GB</span></h5>

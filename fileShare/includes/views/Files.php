@@ -133,14 +133,14 @@
                                     <ol class="filelist overflow-auto">
                                         <li class="d-flex align-items-center justify-content-between my-1">
                                             <div><input type="file" name="addFiles[]" /></div>
-                                            <button type="button" class="btn btn-danger btn-sm" class="deleteMultiFile">Delete</button>
+                                            <button type="button" class="btn btn-danger btn-sm text-uppercase" class="deleteMultiFile">Delete</button>
                                         </li>
                                     </ol>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
-                                <button id="addMultiFiles" name="file_submit" class="btn btn-primary btn-sm">Add Files</button>
-                                <button type="submit" name="file_submit" class="btn btn-primary btn-sm">Upload Files</button>
+                                <button id="addMultiFiles" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Add Files</button>
+                                <button type="submit" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Upload Files</button>
                             </div>
                         </form>
                     </div>
@@ -154,14 +154,16 @@
                         <i class="bi bi-plus"></i>
                         <span class="text-uppercase">Add Files</span>
                     </button>
-                </div>';
+                </div>
+                
+                ';
     if (count($fq) >= 1) {
         for ($x = 0; $x < count($fq); $x++) {
             echo '<div class="row pb-1">
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fid' . $fq[$x]['file_id'] . '" aria-expanded="false" aria-controls="fid' . $fq[$x]['file_id'] . '">
+                                            <button class="accordion-button collapsed shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#fid' . $fq[$x]['file_id'] . '" aria-expanded="false" aria-controls="fid' . $fq[$x]['file_id'] . '">
                                                 <div class="d-block w-auto lh-base">
                                                     <div>
                                                         <span class="mb-2 fs-5 fw-bold">' . $fq[$x]['file_title'] . '</span>
@@ -176,13 +178,14 @@
                                                 </div>
                                             </button>
                                         </h2>
-                                        <div id="fid' . $fq[$x]['file_id'] . '" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <div id="fid' . $fq[$x]['file_id'] . '" class="accordion-collapse collapse shadow-sm" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                             <div class="accordion-body">
-                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam error sequi corrupti officiis exercitationem eaque in doloremque temporibus rerum accusamus soluta, nobis perferendis dicta. Pariatur inventore vitae ut eum similique?</p>
+                                                <div class="row">
+                                                    
+                                                </div>
                                                 <div class="mt-3">
-                                                    <button type="button" class="btn btn-sm btn-primary">Edit</button>
-                                                    <a href="dashboard.php?id=' . urlencode($id) . '&task=files&deleteid=' . $fq[$x]['file_id'] . '" class="btn btn-sm btn-danger" onclick="return confirm(\' you want to delete?\');">Delete</a>
-                                                    <button type="button" class="btn btn-sm btn-primary">Download Files</button>
+                                                    <a href="dashboard.php?id=' . urlencode($id) . '&task=files&deleteid=' . $fq[$x]['file_id'] . '" class="btn btn-sm btn-danger text-uppercase" onclick="return confirm(\' you want to delete?\');">Delete</a>
+                                                    <button type="button" class="btn btn-sm btn-primary text-uppercase">Download Files</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -200,4 +203,3 @@
                     </div>';
     }
     echo '</div>';
-?>
