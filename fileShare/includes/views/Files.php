@@ -123,7 +123,24 @@
                             </div>
                             <div class="mb-2">
                                 <label for="formGroupExampleInput" class="form-label">Description</label>
-                                <textarea name="files_desc" class="form-control" id="exampleFormControlTextarea1" placeholder="Enter Description" rows="3"></textarea>
+                                <textarea name="files_desc" class="form-control" id="exampleFormControlTextarea1" placeholder="Enter Description" rows="2"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-12 d-md-flex">
+                                    <div class="col-md-6 col-xs-12 pe-2">
+                                        <label for="formGroupExampleInput" class="form-label">Category</label>
+                                        <select id="selectCategory" class="form-control">
+                                            <option selected>Please select category</option>
+                                            <option>orange</option>
+                                            <option>white</option>
+                                            <option>purple</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="formGroupExampleInput" class="form-label">Expiry Date</label>
+                                        <input id="startDate" class="form-control" type="date" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="my-3">
                                 <div class="d-flex align-items-center justify-content-between">
@@ -163,8 +180,8 @@
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-headingOne">
-                                            <button class="accordion-button collapsed shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#fid' . $fq[$x]['file_id'] . '" aria-expanded="false" aria-controls="fid' . $fq[$x]['file_id'] . '">
-                                                <div class="d-block w-auto lh-base">
+                                            <button class="accordion-button collapsed shadow-sm remove-dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#fid' . $fq[$x]['file_id'] . '" aria-expanded="false" aria-controls="fid' . $fq[$x]['file_id'] . '">
+                                                <div class="d-block lh-base w-100">
                                                     <div>
                                                         <span class="mb-2 fs-5 fw-bold">' . $fq[$x]['file_title'] . '</span>
                                                     </div>
@@ -176,6 +193,7 @@
                                                         <span>Total File Count: ' . getFileDetails($fq[$x]['file_lists'])[0]['filecount'] . '</span>
                                                     </div>
                                                 </div>
+                                                <a href="dashboard.php?id=' . urlencode($id) . '&task=categories&deleteid" class="btn btn-sm btn-danger text-uppercase" onclick="return confirm(\' you want to delete?\');">Delete</a>
                                             </button>
                                         </h2>
                                         <div id="fid' . $fq[$x]['file_id'] . '" class="accordion-collapse collapse shadow-sm" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -183,7 +201,7 @@
                                                 <div class="row">
                                                     
                                                 </div>
-                                                <div class="mt-3">
+                                                <div class="mt-3 text-center">
                                                     <a href="dashboard.php?id=' . urlencode($id) . '&task=files&deleteid=' . $fq[$x]['file_id'] . '" class="btn btn-sm btn-danger text-uppercase" onclick="return confirm(\' you want to delete?\');">Delete</a>
                                                     <button type="button" class="btn btn-sm btn-primary text-uppercase">Download Files</button>
                                                 </div>

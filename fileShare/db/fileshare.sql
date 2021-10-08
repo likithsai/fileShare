@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 03, 2021 at 04:29 PM
+-- Generation Time: Oct 08, 2021 at 05:07 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.4.9
 
@@ -29,13 +29,14 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `tbl_categories`;
 CREATE TABLE IF NOT EXISTS `tbl_categories` (
-  `categy_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(50) DEFAULT NULL,
+  `category_desc` varchar(200) DEFAULT NULL,
   `category_userid` int(11) DEFAULT NULL,
-  `category_updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`categy_id`),
+  `category_createddate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`category_id`),
   KEY `category_userid` (`category_userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -57,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   PRIMARY KEY (`file_id`),
   KEY `file_userid` (`file_userid`),
   KEY `file_category` (`file_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
