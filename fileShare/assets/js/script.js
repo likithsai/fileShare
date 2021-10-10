@@ -9,6 +9,4 @@ $(function () {
         e.preventDefault();
         $(this).parent().remove();
     });
-
-    $('#selectCategory').selectTag();
 });

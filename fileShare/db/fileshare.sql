@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 08, 2021 at 05:07 PM
+-- Generation Time: Oct 10, 2021 at 04:29 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.4.9
 
@@ -24,23 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_categories`
---
-
-DROP TABLE IF EXISTS `tbl_categories`;
-CREATE TABLE IF NOT EXISTS `tbl_categories` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(50) DEFAULT NULL,
-  `category_desc` varchar(200) DEFAULT NULL,
-  `category_userid` int(11) DEFAULT NULL,
-  `category_createddate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`category_id`),
-  KEY `category_userid` (`category_userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tbl_files`
 --
 
@@ -49,16 +32,14 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   `file_id` int(11) NOT NULL AUTO_INCREMENT,
   `file_title` varchar(50) DEFAULT NULL,
   `file_description` varchar(200) DEFAULT NULL,
-  `file_category` int(11) DEFAULT NULL,
   `file_lists` json DEFAULT NULL,
   `file_share` tinyint(1) DEFAULT NULL,
   `file_userid` int(11) NOT NULL,
   `file_expirydate` timestamp NULL DEFAULT NULL,
   `file_createddate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`file_id`),
-  KEY `file_userid` (`file_userid`),
-  KEY `file_category` (`file_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+  KEY `file_userid` (`file_userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -111,12 +92,6 @@ INSERT INTO `tbl_user` (`user_id`, `user_personname`, `user_email`, `user_name`,
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `tbl_categories`
---
-ALTER TABLE `tbl_categories`
-  ADD CONSTRAINT `tbl_categories_ibfk_1` FOREIGN KEY (`category_userid`) REFERENCES `tbl_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_files`

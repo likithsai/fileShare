@@ -13,8 +13,8 @@ echo '<div class="col-lg-9 col-md-12 px-lg-4">
                 <div class="col-sm-4 px-0 ps-lg-1 pe-lg-1">
                     <div class="card">
                         <div class="card-body text-center">
-                            <p class="card-text mb-1">Total Categories</p>
-                            <h1 class="card-title">' . count($categoriescount) . '</h1>
+                            <p class="card-text mb-1">Total Shared files</p>
+                            <h1 class="card-title">0</h1>
                         </div>
                     </div>
                 </div>

@@ -27,8 +27,7 @@
 
 
     $filescount = $db->query("SELECT * FROM tbl_files WHERE file_userid=?", array($user_data['user_id']));
-    $categoriescount = $db->query("SELECT * FROM tbl_categories WHERE category_userid=?", array($user_data['user_id']));
-
+   
     echo '<body cz-shortcut-listen="true" class="h-100 flex-column d-flex">
       <header class="sticky-top shadow-sm">
         <div class="collapse" id="navbarToggleExternalContent">
@@ -67,13 +66,13 @@
                 </a>
               </div>
               <div class="accordion-item bg-dark">
-                <a href="dashboard.php?id=' . urlencode($id) . '&task=categories" class="accordion-item text-decoration-none">
+                <a href="dashboard.php?id=' . urlencode($id) . '&task=sharedfiles" class="accordion-item text-decoration-none">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed remove-dropdown bg-dark text-white" type="button" data-bs-toggle="collapse">
-                      <i class="bi bi-journal-bookmark me-3"></i>
+                      <i class="bi bi-share me-3"></i>
                       <div class="d-flex align-items-center justify-content-between w-100">
-                          <span>Categories</span>
-                          <span class="badge bg-primary">' . count($categoriescount) . '</span>
+                          <span>Shared files</span>
+                          <span class="badge bg-primary">' . count($filescount) .'</span>
                       </div>
                     </button>
                   </h2>
@@ -101,19 +100,28 @@
               </svg>
               <strong>' . APP_NAME . '</strong>
             </a>
+
+            <div class="d-none d-lg-flex nav me-3 text-white p-1">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle me-2"></i>
+                    <span>' . $user_data['user_name'] .'</span>
+                  </a>
+                  <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">My Account</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="dashboard.php?id=' . urlencode($id) . '&task=logout">Logout</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
             <button class="navbar-toggler d-block d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-
-            <ul class="d-none d-lg-flex nav me-3">
-              <li class="text-white p-1">
-                <i class="bi bi-person-circle"></i>
-                <span>' . $user_data['user_name'] .', </span>
-              </li>
-              <li class="text-white p-1">
-                <a class="text-warning" href="dashboard.php?id=' . urlencode($id) . '&task=logout">Logout</a>
-              </li>
-            </ul>
+            
           </div>
         </div>
       </header>
@@ -156,13 +164,13 @@
                   </a>
                 </div>
                 <div class="accordion-item">
-                  <a href="dashboard.php?id=' . urlencode($id) . '&task=categories" class="accordion-item text-decoration-none">
+                  <a href="dashboard.php?id=' . urlencode($id) . '&task=sharedfiles" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('categories') . '" type="button" data-bs-toggle="collapse">
-                        <i class="bi bi-journal-bookmark me-3"></i>
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('sharedfiles') . '" type="button" data-bs-toggle="collapse">
+                        <i class="bi bi-share me-3"></i>
                         <div class="d-flex align-items-center justify-content-between w-100">
-                          <span>Categories</span>
-                          <span class="badge bg-primary">' . count($categoriescount) . '</span>
+                          <span>Shared Files</span>
+                          <span class="badge bg-primary">' . count($filescount) .'</span>
                         </div>
                       </button>
                     </h2>
@@ -205,12 +213,8 @@
                   include_once 'includes/views/Files.php';
                   break;
 
-                case 'shared':
-                  include_once 'includes/views/Shared.php';
-                  break;
-
-                case 'categories':
-                  include_once 'includes/views/Categories.php';
+                case 'sharedfiles':
+                  include_once 'includes/views/Sharedfiles.php';
                   break;
 
                 case 'users':
