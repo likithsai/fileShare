@@ -251,16 +251,19 @@
                                                                     </div>
                                                                     <div class="table-responsive">
                                                                         <table class="table">
-                                                                            <tbody>
-                                                                                <tr>
+                                                                            <tbody>';
+
+                                                                            
+                                                                            foreach (json_decode($fq[$x]['file_lists']) as $item) {
+                                                                                $itemArray = (array) $item;
+                                                                                
+                                                                                echo '<tr>
                                                                                     <td class="align-middle w-90">
                                                                                         <div class="d-block">
-                                                                                            <div class="fw-bold">Mark</div>
-                                                                                            <small class="text-muted">SHA: h36dg48fj5</small>
+                                                                                            <div class="fw-bold">' . $itemArray['filename'] . '</div>
+                                                                                            <small class="text-muted">SHA : ' . sha1_file($itemArray['location'], false) . '</small><br />
+                                                                                            <small class="text-muted">Filesize : ' . formatSizeUnits($itemArray['filesize']) . '</small>
                                                                                         </div>
-                                                                                    </td>
-                                                                                    <td class="align-middle w-10">
-                                                                                        <small class="text-muted">3 MB</small>                                                                                        
                                                                                     </td>
                                                                                     <td class="align-middle w-100">
                                                                                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
@@ -272,8 +275,10 @@
                                                                                             </button>
                                                                                         </div>
                                                                                     </td>
-                                                                                </tr>
-                                                                            </tbody>
+                                                                                </tr>';
+                                                                            }
+
+                                                                            echo '</tbody>
                                                                         </table>
                                                                     </div>
                                                                 </div>
