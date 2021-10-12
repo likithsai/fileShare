@@ -211,19 +211,20 @@
                                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                             <li class="nav-item" role="presentation">
                                                                 <a class="nav-link active" id="home-tab' . $fq[$x]['file_id'] . '" data-bs-toggle="tab" data-bs-target="#home' . $fq[$x]['file_id'] . '" type="button" role="tab" aria-controls="home' . $fq[$x]['file_id'] . '" aria-selected="true">
-                                                                    <i class="bi bi-house me-2"></i>
+                                                                    <i class="bi bi-house me-1"></i>
                                                                     <span>Home</span>
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item" role="presentation">
                                                                 <a class="nav-link" id="files-tab' . $fq[$x]['file_id'] . '" data-bs-toggle="tab" data-bs-target="#files' . $fq[$x]['file_id'] . '" type="button" role="tab" aria-controls="files' . $fq[$x]['file_id'] . '" aria-selected="false">
-                                                                    <i class="bi bi-journals me-2"></i>
+                                                                    <i class="bi bi-journals me-1"></i>
                                                                     <span>Files</span>
+                                                                    <small class="badge bg-primary">' . count(json_decode($fq[$x]['file_lists'])) . '</small>
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item" role="presentation">
                                                                 <a class="nav-link" id="users-tab' . $fq[$x]['file_id'] . '" data-bs-toggle="tab" data-bs-target="#users' . $fq[$x]['file_id'] . '" type="button" role="tab" aria-controls="users' . $fq[$x]['file_id'] . '" aria-selected="false">
-                                                                    <i class="bi bi-people me-2"></i>
+                                                                    <i class="bi bi-people me-1"></i>
                                                                     <span>Users</span>
                                                                 </a>
                                                             </li>
@@ -262,7 +263,11 @@
                                                                                         <div class="d-block">
                                                                                             <div class="fw-bold">' . $itemArray['filename'] . '</div>
                                                                                             <small class="text-muted">SHA : ' . sha1_file($itemArray['location'], false) . '</small><br />
-                                                                                            <small class="text-muted">Filesize : ' . formatSizeUnits($itemArray['filesize']) . '</small>
+                                                                                            <small class="text-muted">
+                                                                                                <div class="badge bg-primary">
+                                                                                                    <span>Filesize: ' . formatSizeUnits($itemArray['filesize']) . '</span>
+                                                                                                </div
+                                                                                            </small>
                                                                                         </div>
                                                                                     </td>
                                                                                     <td class="align-middle w-100">
