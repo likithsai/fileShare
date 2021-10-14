@@ -245,13 +245,17 @@
                                                                         </div>
                                                                 </div>
                                                                 <div class="tab-pane fade my-3 mx-2" id="files' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="files-tab' . $fq[$x]['file_id'] . '">
-                                                                    <div class="d-flex align-items-center justify-content-between p-0 col-md-12">
-                                                                        <div class="input-group input-group-sm mb-3 my-3">
-                                                                            <input type="text" class="form-control" aria-label="Search for Users" aria-describedby="inputGroup-sizing-sm" placeholder="Search for Files ...">
+                                                                    <div class="px-1">
+                                                                        <div class="p-0 col-md-12">
+                                                                            <button type="button" class="btn btn-primary btn-sm text-uppercase">Upload Files</button>
+                                                                            <div class="input-group my-2 d-flex justify-content-between">
+                                                                                <input type="text" class="form-control file-search" data-table-target="files' . $fq[$x]['file_id'] . '" aria-label="Search for Users" aria-describedby="inputGroup-sizing-sm" placeholder="Search for Files ...">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
+              
                                                                     <div class="table-responsive">
-                                                                        <table class="table">
+                                                                        <table id="files' . $fq[$x]['file_id'] . '" class="table my-3">
                                                                             <tbody>';
 
                                                                             
@@ -319,9 +323,9 @@
                                                                 </div>
                                                         </div>
                                                         <div class="d-flex align-items-center justify-content-center my-3 p-0">
-                                                            <input type="submit" class="btn btn-sm btn-primary text-uppercase mx-1" value="Edit Files"></input>
-                                                            <a href="dashboard.php?id=' . urlencode($id) . '&task=files&deleteid=' . $fq[$x]['file_id'] . '" class="btn btn-sm btn-danger text-uppercase mx-1" onclick="return confirm(\' you want to delete?\');">Delete Files</a>
-                                                            <a href="dashboard.php?id=' . urlencode($id) . '&task=downloadfiles&fileid=' . $fq[$x]['file_id'] . '" class="btn btn-sm btn-primary text-uppercase mx-1">Download Files</a>
+                                                            <input type="submit" class="btn btn-sm btn-primary text-uppercase mx-1" value="Edit"></input>
+                                                            <a href="dashboard.php?id=' . urlencode($id) . '&task=files&deleteid=' . $fq[$x]['file_id'] . '" class="btn btn-sm btn-danger text-uppercase mx-1" onclick="return confirm(\' you want to delete?\');">Delete</a>
+                                                            <a href="dashboard.php?id=' . urlencode($id) . '&task=downloadfiles&fileid=' . $fq[$x]['file_id'] . '" class="btn btn-sm btn-primary text-uppercase mx-1">Download</a>
                                                         </div>
                                                     </form>
                                                 </div>

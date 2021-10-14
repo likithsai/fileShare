@@ -9,4 +9,13 @@ $(function () {
         e.preventDefault();
         $(this).parent().remove();
     });
+
+    $(".file-search").on("keyup", function () { 
+        var target = $(this).attr('data-table-target');
+        var value = $(this).val().toLowerCase();
+
+        $('#' + target + ' tr').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 });
