@@ -15,4 +15,5 @@ RewriteCond	%{REQUEST_FILENAME}	!-f
 RewriteRule ^/?config\.php$ - [F,L]
 
 # Returns if link is not found.
-ErrorDocument 404 "<H1>Link not found</H1>"
+ErrorDocument 404 "<h1>Link not found</h1>"
+RedirectMatch 403 error/404.html

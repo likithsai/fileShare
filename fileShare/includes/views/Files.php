@@ -96,8 +96,6 @@ d<?php
                 $file['extension'] = pathinfo($_FILES['addFiles']['name'][$key])['extension'];
                 $file['filesize'] = $_FILES['addFiles']['size'][$key];
                 $file['mimetype'] = $_FILES['addFiles']['type'][$key];
-                $file['publicshare'] = 'true';
-
                 array_push($filelist, $file);
             }
 
@@ -113,8 +111,9 @@ d<?php
             //     array_push($filelist, $file);
             // }
         }
-
-        $db->insert("INSERT INTO tbl_files (file_title, file_description, file_lists, file_share, file_userid, file_expirydate) VALUES(?, ?, ?, ?, ?, ?)", array($filetitle, $filedesc, json_encode($filelist), $fileshare, $fileuserid, $fileexpirydate));
+        
+        $filelinkid = base_convert(rand(00000, 99999), 20, 36);
+        $db->insert("INSERT INTO tbl_files (file_title, file_description, file_lists, file_share, file_linkid, file_userid, file_expirydate) VALUES(?, ?, ?, ?, ?, ?, ?)", array($filetitle, $filedesc, json_encode($filelist), 0, $filelinkid, $fileuserid, $fileexpirydate));
     }
 
     echo '
@@ -122,7 +121,7 @@ d<?php
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Files</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body bg-light">
@@ -154,6 +153,34 @@ d<?php
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <button id="addMultiFiles" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Add Files</button>
+                                <button type="submit" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Upload Files</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="fileUploadModal" tabindex="-1" aria-labelledby="fileUploadModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Files</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-light">
+                        <form method="post" action="" enctype="multipart/form-data">
+                            <div class="my-3">
+                                <div class="row">
+                                    <ol class="filelist overflow-auto">
+                                        <li class="d-flex align-items-center justify-content-between my-1">
+                                            <div><input type="file" name="addFiles[]" /></div>
+                                            <button type="button" class="btn btn-danger btn-sm text-uppercase" class="deleteMultiFile">Delete</button>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button id="addMultiUploadFiles" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Add Files</button>
                                 <button type="submit" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Upload Files</button>
                             </div>
                         </form>
@@ -229,7 +256,7 @@ d<?php
                                                                 </a>
                                                             </li>
                                                         </ul>
-                                                        <div class="tab-content bg-light shadow-sm border rounded-bottom p-2" id="myTabContent">
+                                                        <div class="tab-content bg-light shadow-sm border rounded-bottom" id="myTabContent">
                                                                 <div class="tab-pane fade show active my-3 mx-2" id="home' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="home-tab' . $fq[$x]['file_id'] . '">
                                                                         <div class="mb-3">
                                                                             <div for="formGroupExampleInput" class="form-label fw-bold">
@@ -251,101 +278,84 @@ d<?php
                                                                                 <span>Expiry Date</span>
                                                                             </div>
                                                                             <input name="expiry-date" id="startDate" class="form-control" type="date" value="' . date('Y-m-d', strtotime($fq[$x]['file_expirydate'])) . '">
-                                                                        </div>
-                                                                        <div class="mb-3">
-                                                                            <div for="formGroupExampleInput" class="form-label fw-bold">
-                                                                                <i class="bi bi-gear me-1"></i>
-                                                                                <span>Settings</span>
-                                                                            </div>
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <div class="d-block">
-                                                                                        <div class="fw-bold m-0">File link :</div>
-                                                                                        <div class="mb-2">
-                                                                                            <a class="text-success fw-bold">http://www.google.com</a>
-                                                                                        </div>
-                                                                                        <div class="badge rounded-pill bg-danger">Disabled</div>
+                                                                        </div>                                                                        
+                                                                </div>
+                                                                <div class="tab-pane fade mb-3" id="files' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="files-tab' . $fq[$x]['file_id'] . '">
+                                                                    <div class="alert alert-warning mb-4 shadow-sm border-bottom rounded-0" role="alert">
+                                                                            <div class="d-lg-flex align-item-center justify-content-lg-between">
+                                                                                <div class="mb-2">
+                                                                                    <div for="formGroupExampleInput" class="form-label fw-bold m-0">
+                                                                                        <i class="bi bi-journals me-1"></i>
+                                                                                        <span>Files</span>
                                                                                     </div>
+                                                                                    <p class="text-muted m-0">Shows all the files available in this category</p>
+                                                                                </div>
+                                                                                <button type="button" class="btn btn-primary btn-sm text-uppercase" data-bs-toggle="modal" data-bs-target="#fileUploadModal">Upload Files</button>
+                                                                            </div>
+                                                                            <div class="p-0 col-md-12">
+                                                                                <div class="input-group my-3 mb-0 d-flex justify-content-between shadow-sm">
+                                                                                    <input type="text" class="form-control file-search" data-table-target="files' . $fq[$x]['file_id'] . '" aria-label="Search for Users" aria-describedby="inputGroup-sizing-sm" placeholder="Search for Files ...">
                                                                                 </div>
                                                                             </div>
+                                                                            
+                                                                    </div>
+                                                                    <div class="m-2">
+                                                                        <div class="table-responsive">
+                                                                            <table id="files' . $fq[$x]['file_id'] . '" class="table">
+                                                                                <tbody>';
+
+                                                                                
+                                                                                foreach (json_decode($fq[$x]['file_lists']) as $item) {
+                                                                                    $itemArray = (array) $item;
+                                                                                    
+                                                                                    echo '<tr>
+                                                                                        <td class="align-middle w-90">
+                                                                                            <div class="d-block">
+                                                                                                <div class="fw-bold">' . $itemArray['filename'] . '</div>
+                                                                                                <small class="text-muted">SHA : ' . sha1_file($itemArray['location'], false) . '</small><br />
+                                                                                                <small class="text-muted">
+                                                                                                    <div class="badge bg-primary">
+                                                                                                        <span>Filesize: ' . formatSizeUnits($itemArray['filesize']) . '</span>
+                                                                                                    </div
+                                                                                                </small>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td class="align-middle w-100">
+                                                                                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                                                                                <button type="button" class="btn btn-danger text-uppercase">
+                                                                                                    <i class="bi bi-trash-fill"></i>
+                                                                                                </button>
+                                                                                                <button type="button" class="btn btn-primary text-uppercase">
+                                                                                                    <i class="bi bi-arrows-move"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>';
+                                                                                }
+
+                                                                                echo '</tbody>
+                                                                            </table>
                                                                         </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="tab-pane fade my-3 mx-2" id="files' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="files-tab' . $fq[$x]['file_id'] . '">
-                                                                    <div class="px-1">
-                                                                        <div class="p-0 col-md-12">
-                                                                            <button type="button" class="btn btn-primary btn-sm text-uppercase">Upload Files</button>
-                                                                            <div class="input-group my-2 d-flex justify-content-between">
-                                                                                <input type="text" class="form-control file-search" data-table-target="files' . $fq[$x]['file_id'] . '" aria-label="Search for Users" aria-describedby="inputGroup-sizing-sm" placeholder="Search for Files ...">
+                                                                <div class="tab-pane fade mb-3" id="users' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="users-tab' . $fq[$x]['file_id'] . '">
+                                                                    <div class="mb-3">
+                                                                        <div class="alert alert-warning mb-4 d-lg-flex align-item-center justify-content-lg-between shadow-sm border-bottom rounded-0" role="alert">
+                                                                            <div>
+                                                                                <div for="formGroupExampleInput" class="form-label fw-bold m-0">
+                                                                                    <i class="bi bi-people me-1"></i>
+                                                                                    <span>Users</span>
+                                                                                </div>
+                                                                                <p class="text-muted m-0">Shows the users to which the files are shared.</p>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-              
-                                                                    <div class="table-responsive">
-                                                                        <table id="files' . $fq[$x]['file_id'] . '" class="table my-3">
-                                                                            <tbody>';
-
-                                                                            
-                                                                            foreach (json_decode($fq[$x]['file_lists']) as $item) {
-                                                                                $itemArray = (array) $item;
-                                                                                
-                                                                                echo '<tr>
-                                                                                    <td class="align-middle w-90">
-                                                                                        <div class="d-block">
-                                                                                            <div class="fw-bold">' . $itemArray['filename'] . '</div>
-                                                                                            <small class="text-muted">SHA : ' . sha1_file($itemArray['location'], false) . '</small><br />
-                                                                                            <small class="text-muted">
-                                                                                                <div class="badge bg-primary">
-                                                                                                    <span>Filesize: ' . formatSizeUnits($itemArray['filesize']) . '</span>
-                                                                                                </div
-                                                                                            </small>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td class="align-middle w-100">
-                                                                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                                                                            <button type="button" class="btn btn-danger text-uppercase">
-                                                                                                <i class="bi bi-trash-fill"></i>
-                                                                                            </button>
-                                                                                            <button type="button" class="btn btn-primary text-uppercase">
-                                                                                                <i class="bi bi-arrows-move"></i>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>';
-                                                                            }
-
-                                                                            echo '</tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane fade my-3 mx-2" id="users' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="users-tab' . $fq[$x]['file_id'] . '">
-                                                                    <div class=" p-0 col-md-12">
-                                                                        <button type="button" class="btn btn-primary btn-sm text-uppercase">Add Users</button>
-                                                                        <div class="input-group mb-3 mb-3 mt-2">
-                                                                            <input type="text" class="form-control" aria-label="Seach for users" aria-describedby="inputGroup-sizing-sm" placeholder="Search for Users ...">
+                                                                        <div class="m-3">
+                                                                            <select class="form-select js-example-basic-multiple" multiple aria-label="multiple select example" multiple>
+                                                                                <option value="1">One</option>
+                                                                                <option value="2">Two</option>
+                                                                                <option value="3">Three</option>
+                                                                            </select>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="table-responsive">
-                                                                        <table class="table">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td class="align-middle w-100">
-                                                                                        <div class="d-block">
-                                                                                            <div class="fw-bold">Mark</div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td class="align-middle">
-                                                                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                                                                            <button type="button" class="btn btn-danger text-uppercase">
-                                                                                                <i class="bi bi-trash-fill"></i>
-                                                                                            </button>
-                                                                                            <button type="button" class="btn btn-primary text-uppercase">
-                                                                                                <i class="bi bi-arrows-move"></i>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
                                                                     </div>
                                                                 </div>
                                                         </div>
