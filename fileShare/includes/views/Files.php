@@ -1,4 +1,4 @@
-<?php
+d<?php
     $fq = $db->query("SELECT * FROM tbl_files WHERE file_userid=? ORDER BY file_createddate DESC", array($user_data['user_id']));
 
     function getFileDetails($jsonStringFiles)
@@ -185,30 +185,31 @@
                                         <h2 class="accordion-header" id="flush-headingOne">
                                             <button class="accordion-button collapsed shadow-sm remove-dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#fid' . $fq[$x]['file_id'] . '" aria-expanded="false" aria-controls="fid' . $fq[$x]['file_id'] . '">
                                                 <div class="d-block lh-base w-100">
+                                                    <div class="mb-2">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span class="fs-5 fw-bold">' . $fq[$x]['file_title'] . '</span>
+                                                            <div class="badge bg-success mt-2 ms-3">
+                                                                <span>Active</span>
+                                                            </div>
+                                                        </div>
+                                                        <small class="me-3 text-muted d-block">' . $fq[$x]['file_description'] . '</small>
+                                                    </div>
                                                     <div>
-                                                        <span class="mb-2 fs-5 fw-bold">' . $fq[$x]['file_title'] . '</span>
-                                                    </div>
-                                                    <small class="me-3 text-muted d-block">' . $fq[$x]['file_description'] . '</small>
-                                                    <div class="badge bg-primary mt-2">
-                                                        <span>Total File Size: ' . formatSizeUnits(getFileDetails($fq[$x]['file_lists'])[0]['filesize']) . '</span>
-                                                    </div>
-                                                    <div class="badge bg-primary mt-2">
-                                                        <span>Total File Count: ' . getFileDetails($fq[$x]['file_lists'])[0]['filecount'] . '</span>
+                                                        <div class="badge bg-primary mt-2">
+                                                            <span>Total File Size: ' . formatSizeUnits(getFileDetails($fq[$x]['file_lists'])[0]['filesize']) . '</span>
+                                                        </div>
+                                                        <div class="badge bg-primary mt-2">
+                                                            <span>Total File Count: ' . getFileDetails($fq[$x]['file_lists'])[0]['filecount'] . '</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <span class="badge bg-success ms-3 d-flex align-items-center">
-                                                    <div class="spinner-grow spinner-grow-sm me-2" role="status">
-                                                        <span class="visually-hidden">Loading...</span>
-                                                    </div>
-                                                    <span>Active</span>
-                                                </span>
                                             </button>
                                         </h2>
                                         <div id="fid' . $fq[$x]['file_id'] . '" class="accordion-collapse collapse shadow-sm" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                             <div class="accordion-body p-2">
                                                 <div class="row my-2 mx-1">
-                                                    <form method="post" action="" enctype="multipart/form-data">
-                                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <form method="post" action="" enctype="multipart/form-data" class="px-0 px-lg-2">
+                                                        <ul class="nav nav-tabs flex-nowrap text-center d-flex justify-content-between justify-content-lg-start" id="myTab" role="tablist">
                                                             <li class="nav-item" role="presentation">
                                                                 <a class="nav-link active" id="home-tab' . $fq[$x]['file_id'] . '" data-bs-toggle="tab" data-bs-target="#home' . $fq[$x]['file_id'] . '" type="button" role="tab" aria-controls="home' . $fq[$x]['file_id'] . '" aria-selected="true">
                                                                     <i class="bi bi-house me-1"></i>
@@ -219,7 +220,6 @@
                                                                 <a class="nav-link" id="files-tab' . $fq[$x]['file_id'] . '" data-bs-toggle="tab" data-bs-target="#files' . $fq[$x]['file_id'] . '" type="button" role="tab" aria-controls="files' . $fq[$x]['file_id'] . '" aria-selected="false">
                                                                     <i class="bi bi-journals me-1"></i>
                                                                     <span>Files</span>
-                                                                    <small class="badge bg-primary">' . count(json_decode($fq[$x]['file_lists'])) . '</small>
                                                                 </a>
                                                             </li>
                                                             <li class="nav-item" role="presentation">
@@ -232,16 +232,42 @@
                                                         <div class="tab-content bg-light shadow-sm border rounded-bottom p-2" id="myTabContent">
                                                                 <div class="tab-pane fade show active my-3 mx-2" id="home' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="home-tab' . $fq[$x]['file_id'] . '">
                                                                         <div class="mb-3">
-                                                                            <label for="formGroupExampleInput" class="form-label">Title</label>
+                                                                            <div for="formGroupExampleInput" class="form-label fw-bold">
+                                                                                <i class="bi bi-input-cursor-text me-1"></i>
+                                                                                <span>Title</span>
+                                                                            </div>
                                                                             <input type="text" name="files_title" class="form-control" id="formGroupExampleInput" placeholder="Enter Title" value="' . $fq[$x]['file_title'] . '">
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="formGroupExampleInput" class="form-label">Description</label>
+                                                                            <div for="formGroupExampleInput" class="form-label fw-bold">
+                                                                                <i class="bi bi-justify-left me-1"></i>
+                                                                                <span>Description</span>
+                                                                            </div>
                                                                             <textarea name="files_desc" class="form-control" id="exampleFormControlTextarea1" placeholder="Enter Description" rows="2">' . $fq[$x]['file_description'] . '</textarea>
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="formGroupExampleInput" class="form-label">Expiry Date</label>
+                                                                            <div for="formGroupExampleInput" class="form-label fw-bold">
+                                                                                <i class="bi bi-calendar2-check me-1"></i>
+                                                                                <span>Expiry Date</span>
+                                                                            </div>
                                                                             <input name="expiry-date" id="startDate" class="form-control" type="date" value="' . date('Y-m-d', strtotime($fq[$x]['file_expirydate'])) . '">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <div for="formGroupExampleInput" class="form-label fw-bold">
+                                                                                <i class="bi bi-gear me-1"></i>
+                                                                                <span>Settings</span>
+                                                                            </div>
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    <div class="d-block">
+                                                                                        <div class="fw-bold m-0">File link :</div>
+                                                                                        <div class="mb-2">
+                                                                                            <a class="text-success fw-bold">http://www.google.com</a>
+                                                                                        </div>
+                                                                                        <div class="badge rounded-pill bg-danger">Disabled</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                 </div>
                                                                 <div class="tab-pane fade my-3 mx-2" id="files' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="files-tab' . $fq[$x]['file_id'] . '">
@@ -292,8 +318,9 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="tab-pane fade my-3 mx-2" id="users' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="users-tab' . $fq[$x]['file_id'] . '">
-                                                                    <div class="d-flex align-items-center justify-content-between p-0 col-md-12">
-                                                                        <div class="input-group input-group-sm mb-3 my-3">
+                                                                    <div class=" p-0 col-md-12">
+                                                                        <button type="button" class="btn btn-primary btn-sm text-uppercase">Add Users</button>
+                                                                        <div class="input-group mb-3 mb-3 mt-2">
                                                                             <input type="text" class="form-control" aria-label="Seach for users" aria-describedby="inputGroup-sizing-sm" placeholder="Search for Users ...">
                                                                         </div>
                                                                     </div>

@@ -1,0 +1,18 @@
+# Allows magic to turn on
+Options +FollowSymLinks -Indexes -MultiViews
+
+# Turns magic on
+RewriteEngine on
+
+# Allows you to use http://linkstuff.com/AW1N
+# Rather than using http://linkstuff.com/decode.php?decode=$1=AW1N
+# Much sexier!
+RewriteRule ^([\w\d]{4})$ decode.php?decode=$1 [L,QSA]
+
+# Blocks permission for web access to the config file.
+RewriteCond	%{REQUEST_FILENAME}	!-d
+RewriteCond	%{REQUEST_FILENAME}	!-f
+RewriteRule ^/?config\.php$ - [F,L]
+
+# Returns if link is not found.
+ErrorDocument 404 "<H1>Link not found</H1>"

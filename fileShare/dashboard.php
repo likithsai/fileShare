@@ -108,7 +108,7 @@
                     <i class="bi bi-person-circle me-2"></i>
                     <span>' . $user_data['user_name'] .'</span>
                   </a>
-                  <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
+                  <ul class="dropdown-menu dropdown-menu-end position-absolute" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#">My Account</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
                     <li><hr class="dropdown-divider"></li>
@@ -130,7 +130,7 @@
         <div class="row">
           <div class="col-md-12 d-lg-flex my-4 my-lg-4">
             <div class="col-lg-3 d-none d-lg-block">
-              <div class="accordion accordion-flush shadow-sm" id="accordionFlushExample">
+              <div class="accordion accordion-flush shadow-sm position-sticky" id="accordionFlushExample">
                 <div class="accordion-item px-3 py-4">
                   <div>
                     <h5 class="mb-0 text-primary font-weight-bold">45.5 GB <span class="float-end text-secondary">50 GB</span></h5>

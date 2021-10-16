@@ -7,6 +7,9 @@
     define('SEC_KEY', '4t7w!z%C*F-JaNdRgUkXp2s5u8x/A?D(');
     define('DEBUG', true);
     define('FILE_UPLOAD_PATH', 'uploads/');
+    define('TIMEZONE', 'UTC');
+
+    date_default_timezone_set(TIMEZONE); 
 
     if ( DEBUG === true ) {
         ini_set('display_errors', 'on');
