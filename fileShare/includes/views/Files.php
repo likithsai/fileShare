@@ -41,14 +41,6 @@ d<?php
         return $bytes;
     }
 
-    if(isset($_GET['downloadfiles'])) {
-        switch(strtolower($_GET['downloadfiles'])) {
-            case 'downloadfiles':
-                echo $_GET['fileid'];
-                break;
-        }
-    }
-
     if (isset($_GET['task']) && isset($_GET['deleteid'])) {
         $deleteStatus = true;
         if (strtolower($_GET['task']) == 'files') {
@@ -72,6 +64,13 @@ d<?php
                     $db->delete("DELETE FROM tbl_files WHERE file_id = ?", array($_GET['deleteid']));
                 }
             }
+        }
+    }
+
+    //  download files
+    if(isset($_GET['task']) && isset($_GET['fid'])) {
+        if(strtolower($_GET['task']) == 'downloadfiles') {
+            echo 'Files are downloading ...';
         }
     }
 
@@ -111,7 +110,7 @@ d<?php
             //     array_push($filelist, $file);
             // }
         }
-        
+
         $filelinkid = base_convert(rand(00000, 99999), 20, 36);
         $db->insert("INSERT INTO tbl_files (file_title, file_description, file_lists, file_share, file_linkid, file_userid, file_expirydate) VALUES(?, ?, ?, ?, ?, ?, ?)", array($filetitle, $filedesc, json_encode($filelist), 0, $filelinkid, $fileuserid, $fileexpirydate));
     }
@@ -168,13 +167,13 @@ d<?php
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body bg-light">
-                        <form method="post" action="" enctype="multipart/form-data">
+                        <form method="post" action="dashboard.php?id=' . urlencode($id) . '&task=files" enctype="multipart/form-data">
                             <div class="my-3">
                                 <div class="row">
-                                    <ol class="filelist overflow-auto">
+                                    <ol class="uploadList overflow-auto">
                                         <li class="d-flex align-items-center justify-content-between my-1">
                                             <div><input type="file" name="addFiles[]" /></div>
-                                            <button type="button" class="btn btn-danger btn-sm text-uppercase" class="deleteMultiFile">Delete</button>
+                                            <button type="button" class="btn btn-danger btn-sm text-uppercase" class="deleteMultiUploadFile">Delete</button>
                                         </li>
                                     </ol>
                                 </div>
@@ -203,7 +202,7 @@ d<?php
                 </div>
                 <div class="row pb-1">
                     <div class="accordion accordion-flush overflow-auto">';
-                
+
     if (count($fq) >= 1) {
         for ($x = 0; $x < count($fq); $x++) {
             echo '
@@ -281,7 +280,7 @@ d<?php
                                                                         </div>                                                                        
                                                                 </div>
                                                                 <div class="tab-pane fade mb-3" id="files' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="files-tab' . $fq[$x]['file_id'] . '">
-                                                                    <div class="alert alert-warning mb-4 shadow-sm border-bottom rounded-0" role="alert">
+                                                                    <div class="alert alert-warning shadow-sm border-bottom rounded-0" role="alert">
                                                                             <div class="d-lg-flex align-item-center justify-content-lg-between">
                                                                                 <div class="mb-2">
                                                                                     <div for="formGroupExampleInput" class="form-label fw-bold m-0">
@@ -290,7 +289,9 @@ d<?php
                                                                                     </div>
                                                                                     <p class="text-muted m-0">Shows all the files available in this category</p>
                                                                                 </div>
-                                                                                <button type="button" class="btn btn-primary btn-sm text-uppercase" data-bs-toggle="modal" data-bs-target="#fileUploadModal">Upload Files</button>
+                                                                                <div>
+                                                                                    <button type="button" class="btn btn-primary btn-sm text-uppercase" data-bs-toggle="modal" data-bs-target="#fileUploadModal">Upload Files</button>
+                                                                                </div>
                                                                             </div>
                                                                             <div class="p-0 col-md-12">
                                                                                 <div class="input-group my-3 mb-0 d-flex justify-content-between shadow-sm">
@@ -303,20 +304,21 @@ d<?php
                                                                         <div class="table-responsive">
                                                                             <table id="files' . $fq[$x]['file_id'] . '" class="table">
                                                                                 <tbody>';
+                                                                            foreach (json_decode($fq[$x]['file_lists']) as $item) {
+                                                                                $itemArray = (array) $item;
 
-                                                                                
-                                                                                foreach (json_decode($fq[$x]['file_lists']) as $item) {
-                                                                                    $itemArray = (array) $item;
-                                                                                    
-                                                                                    echo '<tr>
+                                                                                echo '<tr>
                                                                                         <td class="align-middle w-90">
                                                                                             <div class="d-block">
-                                                                                                <div class="fw-bold">' . $itemArray['filename'] . '</div>
+                                                                                                <div class="fw-bold"><a href="dashboard.php?id=' . urlencode($id) . '&task=downloadfiles&fid=' . $fq[$x]['file_id'] . '">' . $itemArray['filename'] . '</a></div>
                                                                                                 <small class="text-muted">SHA : ' . sha1_file($itemArray['location'], false) . '</small><br />
                                                                                                 <small class="text-muted">
                                                                                                     <div class="badge bg-primary">
                                                                                                         <span>Filesize: ' . formatSizeUnits($itemArray['filesize']) . '</span>
-                                                                                                    </div
+                                                                                                    </div>
+                                                                                                    <div class="badge bg-primary">
+                                                                                                        <span>Total Downloads: ' . formatSizeUnits($itemArray['filesize']) . '</span>
+                                                                                                    </div>
                                                                                                 </small>
                                                                                             </div>
                                                                                         </td>
@@ -332,7 +334,6 @@ d<?php
                                                                                         </td>
                                                                                     </tr>';
                                                                                 }
-
                                                                                 echo '</tbody>
                                                                             </table>
                                                                         </div>
@@ -340,7 +341,7 @@ d<?php
                                                                 </div>
                                                                 <div class="tab-pane fade mb-3" id="users' . $fq[$x]['file_id'] . '" role="tabpanel" aria-labelledby="users-tab' . $fq[$x]['file_id'] . '">
                                                                     <div class="mb-3">
-                                                                        <div class="alert alert-warning mb-4 d-lg-flex align-item-center justify-content-lg-between shadow-sm border-bottom rounded-0" role="alert">
+                                                                        <div class="alert alert-warning d-lg-flex align-item-center justify-content-lg-between shadow-sm border-bottom rounded-0" role="alert">
                                                                             <div>
                                                                                 <div for="formGroupExampleInput" class="form-label fw-bold m-0">
                                                                                     <i class="bi bi-people me-1"></i>

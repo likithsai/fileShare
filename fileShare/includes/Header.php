@@ -25,5 +25,6 @@
     <!-- <link rel="stylesheet" href="../fileShare/assets/css/bootstrap-icon/bootstrap-icons.css" /> -->
     <link rel="stylesheet" href="../fileShare/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../fileShare/assets/css/bootstrap-icon/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="../fileShare/assets/css/select2.min.css" />
     <link rel="stylesheet" href="../fileShare/assets/css/style.min.css" />
 </head>
