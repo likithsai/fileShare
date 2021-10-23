@@ -27,7 +27,8 @@
 
 
     $filescount = $db->query("SELECT * FROM tbl_files WHERE file_userid=?", array($user_data['user_id']));
-   
+    $usercount = $db->query("SELECT * FROM tbl_user WHERE user_uid=?", array($user_data['user_id']));
+
     echo '<body cz-shortcut-listen="true" class="h-100 flex-column d-flex">
       <header class="sticky-top shadow-sm">
         <div class="collapse" id="navbarToggleExternalContent">
@@ -83,7 +84,10 @@
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed bg-dark  text-white" type="button" data-bs-toggle="collapse">
                       <i class="bi bi-person-circle me-3"></i>
-                      <span>Users</span>
+                      <div class="d-flex align-items-center justify-content-between w-100">
+                        <span>Users</span>
+                        <span class="badge bg-primary">' . count($usercount) . '</span>
+                      </div>
                     </button>
                   </h2>
                 </a>
@@ -183,7 +187,7 @@
                         <i class="bi bi-person-circle me-3"></i>
                         <div class="d-flex align-items-center justify-content-between w-100">
                           <span>Users</span>
-                          <span class="badge bg-primary">4</span>
+                          <span class="badge bg-primary">' . count($usercount) . '</span>
                         </div>
                       </button>
                     </h2>
