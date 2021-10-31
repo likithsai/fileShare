@@ -1,4 +1,4 @@
-d<?php
+<?php
     $fq = $db->query("SELECT * FROM tbl_files WHERE file_userid=? ORDER BY file_createddate DESC", array($user_data['user_id']));
 
     function getFileDetails($jsonStringFiles)
