@@ -34,10 +34,15 @@ d<?php
         header('location: dashboard.php?id=' . urlencode($id) . '&task=files');
     }
 
+    //  Add files to the category
+    if(isset($_POST['file_addToFileCategory'])) {
+        
+    }
+
     if (isset($_GET['task']) && isset($_GET['deleteid'])) {
         $deleteStatus = true;
         if (strtolower($_GET['task']) == 'files') {
-            $files = $db->query("SELECT file_lists FROM tbl_files WHERE  file_id = ?", array($_GET['deleteid']));
+            $files = $db->query("SELECT file_lists FROM tbl_files WHERE file_id = ?", array($_GET['deleteid']));
             // delete files
             foreach (json_decode($files[0]['file_lists']) as $item) {
                 $itemArray = (array) $item;
@@ -163,7 +168,7 @@ d<?php
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <button id="addMultiUploadFiles" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Add Files</button>
-                                <button type="submit" name="file_submit" class="btn btn-primary btn-sm text-uppercase">Upload Files</button>
+                                <button type="submit" name="file_addToFileCategory" class="btn btn-primary btn-sm text-uppercase">Upload Files</button>
                             </div>
                         </form>
                     </div>

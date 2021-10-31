@@ -11,13 +11,13 @@
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        $query = $db->query("SELECT * FROM tbl_user WHERE user_name=? AND user_pass=?", array($username, $password));
+        $query = $db->query("SELECT * FROM tbl_user WHERE user_loginname=? AND user_pass=?", array($username, $password));
         if (count($query) == 1) {
             $id = $crypto->encrypt(json_encode(array(
                 'user_id' => $query[0]['user_id'], 
                 'user_personname' => $query[0]['user_personname'],
                 'user_email' => $query[0]['user_email'],
-                'user_name' => $query[0]['user_name'],
+                'user_name' => $query[0]['user_loginname'],
                 'user_role' => $query[0]['user_role']
             )), SEC_KEY);
             $session->set('fs_config', $id);

@@ -1,6 +1,9 @@
 <?php
 
     $user = $db->query("SELECT * FROM tbl_user WHERE user_uid=? ORDER BY user_updatedate DESC", array($user_data['user_id']));
+    $userroles = $db->query("SELECT * FROM tbl_roles WHERE role_user=? ORDER BY role_id DESC", array($user_data['user_id']));
+
+    // echo var_export($userroles);
 
     if(isset($_POST['file_user_submit'])) {
         $u_name = $_POST['user_name'];
@@ -43,10 +46,15 @@
                             <div class="mb-3">
                                 <label class="form-label">User Roles</label>
                                 <select name="user_roles" class="form-select" aria-label="Default select example">
-                                    <option selected>Select User Roles</option>
+                                    <option selected> ---------- Select User Roles ---------- </option>
                                     <option value="1">System Admin</option>
-                                    <option value="2">Custom</option>
-                                </select>
+                                    <option value="2">Custom</option>';
+
+                                    // foreach($students as $userroles) {
+                                    //     echo '<option value="1">System Admin</option>';
+                                    // }
+
+                                echo '</select>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <button type="submit" name="file_user_submit" class="btn btn-primary btn-sm text-uppercase">Create Users</button>

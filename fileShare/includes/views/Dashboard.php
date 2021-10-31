@@ -1,32 +1,6 @@
 <?php
 echo '<div class="col-lg-9 col-md-12 px-lg-4">
             <h3>Dashboard</h3>
-            <div class="row mx-0 my-3">
-                <div class="col-sm-4 px-0 ps-lg-1 pe-lg-1">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <p class="card-text mb-1">Files Group</p>
-                            <h1 class="card-title">' . count($filescount) .'</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 px-0 ps-lg-1 pe-lg-1">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <p class="card-text mb-1">Total Shared files</p>
-                            <h1 class="card-title">0</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 px-0 ps-lg-1 pe-lg-1">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <p class="card-text mb-1">Total Users</p>
-                            <h1 class="card-title">43</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="card p-0 col-12 my-3">
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">

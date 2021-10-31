@@ -28,6 +28,7 @@
 
     $filescount = $db->query("SELECT * FROM tbl_files WHERE file_userid=?", array($user_data['user_id']));
     $usercount = $db->query("SELECT * FROM tbl_user WHERE user_uid=?", array($user_data['user_id']));
+    $rolecount = $db->query("SELECT * FROM tbl_roles WHERE role_user=?", array($user_data['user_id']));
 
     echo '<body cz-shortcut-listen="true" class="h-100 flex-column d-flex">
       <header class="sticky-top shadow-sm">
@@ -87,6 +88,19 @@
                       <div class="d-flex align-items-center justify-content-between w-100">
                         <span>Users</span>
                         <span class="badge bg-primary">' . count($usercount) . '</span>
+                      </div>
+                    </button>
+                  </h2>
+                </a>
+              </div>
+              <div class="accordion-item bg-dark">
+                <a href="dashboard.php?id=' . urlencode($id) . '&task=userroles" class="accordion-item text-decoration-none">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed bg-dark  text-white" type="button" data-bs-toggle="collapse">
+                      <i class="bi bi-list-task me-3"></i>
+                      <div class="d-flex align-items-center justify-content-between w-100">
+                        <span>User Roles</span>
+                        <span class="badge bg-primary">' . count($rolecount) . '</span>
                       </div>
                     </button>
                   </h2>
@@ -194,6 +208,19 @@
                   </a>
                 </div>
                 <div class="accordion-item">
+                  <a href="dashboard.php?id=' . urlencode($id) . '&task=userroles" class="accordion-item text-decoration-none">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('userroles') . '" type="button" data-bs-toggle="collapse">
+                        <i class="bi bi-list-task me-3"></i>
+                        <div class="d-flex align-items-center justify-content-between w-100">
+                          <span>Users Roles</span>
+                          <span class="badge bg-primary">' . count($rolecount) . '</span>
+                        </div>
+                      </button>
+                    </h2>
+                  </a>
+                </div>
+                <div class="accordion-item">
                   <a href="dashboard.php?id=' . urlencode($id) . '&task=options" class="accordion-item text-decoration-none">
                     <h2 class="accordion-header">
                       <button class="accordion-button collapsed remove-dropdown ' . getSelectedMenu('options') . '" type="button" data-bs-toggle="collapse">
@@ -223,6 +250,10 @@
 
                 case 'users':
                   include_once 'includes/views/Users.php';
+                  break;
+
+                case 'userroles':
+                  include_once 'includes/views/Userroles.php';
                   break;
 
                 case 'options':
